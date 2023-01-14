@@ -1,0 +1,48 @@
+@import '../../../styles/vars.scss';
+
+.cardfile {
+    display: flex;
+    width: 100%;
+    height: 25px;
+    background-color: $grey;
+    border-radius: 2px;
+    border: 1px solid $black;
+    padding: 0 15px;
+    align-items: center;
+}
+
+.cardfileLeft {
+    display: flex;
+    width: 70%;
+    align-items: center;
+
+    & > *:not(:last-child) {
+        margin-right: 15px;
+    }
+}
+
+.cardfileRight {
+    display: flex;
+    width: 30%;
+    justify-content: flex-end;
+
+    & > *:not(:last-child) {
+        margin-right: 10px;
+    }
+}
+
+.cardfileName {
+    font-weight: 600;
+}
+
+.cardfileType {
+    font-size: 0.8rem;
+}
+
+.cardfileDelete {
+    font-size: 0.8rem;
+    border: 1px solid $danger;
+    padding: 0px 3px;
+    border-radius: 2px;
+    cursor: pointer;
+}

@@ -1,0 +1,1 @@
+export const maximumBytes = 2e+7;

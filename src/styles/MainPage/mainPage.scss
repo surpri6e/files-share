@@ -27,5 +27,44 @@
 }
 
 .files-list_body {
+    & > span {
+        font-size: 1rem;
+        text-decoration: underline;
+    }
     
+    & > * {
+        margin-bottom: 8px;
+    }
+}
+
+.files-list_body-nothing {
+    color: $danger;
+}
+
+.files-list_body-upload {
+    display: flex;
+    width: 100%;
+    justify-content: flex-end;
+    align-items: center;
+
+    & > *:not(:first-child) {
+        margin-left: 15px;
+    }
+}
+
+.files-list_body-btn {
+    text-decoration: none;
+    color: inherit;
+    padding: 5px;
+    border: 1px solid $black;
+    border-radius: 2px;
+    transition: padding 100ms linear;
+
+    &:hover {
+        padding: 5px 20px;
+    }
+}
+
+.files-list_body-limit-danger {
+    color: $danger;
 }
