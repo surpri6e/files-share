@@ -1,0 +1,31 @@
+@import '../vars.scss';
+
+.mainpage {
+    height: 100%;
+}
+
+.arrow_body {
+    display: flex;
+    justify-content: center;
+    padding-top: 30px;
+    margin-bottom: 60px;
+}
+
+.drag_body {
+    padding: 50px 0;
+    text-align: center;
+    color: $darkengray;
+    letter-spacing: 25px;
+    font-size: 3rem;
+    text-transform: uppercase;
+}
+
+.uploaded_body {
+    font-size: 1.2rem;
+    text-align: center;
+    padding-top: 30px;
+}
+
+.files-list_body {
+    
+}
