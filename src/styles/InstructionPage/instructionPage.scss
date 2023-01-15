@@ -1,0 +1,11 @@
+.instruction_text {
+    padding-top: 30px;
+
+    & > span {
+        font-weight: 600;
+    }
+}
+
+.danger_text {
+    font-size: 1.1rem;
+}

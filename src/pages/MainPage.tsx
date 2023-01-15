@@ -7,13 +7,16 @@ import { FirebaseContext } from '../context/FirebaseContext';
 import '../styles/MainPage/mainPage.scss'
 import { formatBytes } from '../utils/bytesToString';
 import { maximumBytes } from '../utils/consts';
+import NothingPage from './NothingPage';
 
 const MainPage = () => {
   const {storage} = React.useContext(FirebaseContext);
   const [drag, setDrag] = React.useState<boolean>(false);
   const [files, setFiles] = React.useState([] as File[]);
-
-  const ID: string = String(Date.now());
+  const [isClicked, setIsClicked] = React.useState<boolean>(true)
+  const [ID] = React.useState<string>(() => String(Date.now()));
+  const [isMobile] = React.useState<boolean>((/Android|webOS|iPhone|iPad|iPod|BlackBerry|BB|PlayBook|IEMobile|Windows Phone|Kindle|Silk|Opera Mini/i
+  .test(navigator.userAgent)))
 
   const dragStart = (e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault()
@@ -31,7 +34,6 @@ const MainPage = () => {
     if(!condition) {
       setFiles((prev) => [...prev, ...e.dataTransfer.files])
     }
-    console.log(files)
     setDrag(false);
   }
 
@@ -39,7 +41,9 @@ const MainPage = () => {
     setFiles(files.filter((el) => el.name !== name))
   }
 
-  const uploadToServer = async () => {
+  const uploadToServer = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    setIsClicked(false);
+    e.preventDefault();
     files.forEach((el) => {
       const storageRef = ref(storage, `${ID}/${el.name}`);
       uploadBytes(storageRef, el).then(() => console.log('upload!')).catch(() => console.log('error!'));
@@ -47,6 +51,11 @@ const MainPage = () => {
   }
 
   return (
+    isMobile
+    ?
+      <NothingPage content='on mobile this application does not work!'/>
+    :
+    <>
     <div className='mainpage'>
       <div className={`arrow_body`}>
         <Arrow/>
@@ -81,19 +90,31 @@ const MainPage = () => {
             <>
               {
                 files.map((el, ind) => 
-                  <CardFile key={ind} file={el} deleteFile={deleteFile}/>
+                  <CardFile key={ind} name={el.name} size={el.size} type={el.type} deleteFile={deleteFile}/>
                 )
               }
               <div className='files-list_body-upload'>
                 <div className={[...files.map((el) => el.size)].reduce((el, acc: number) => acc += el) > maximumBytes ? 'files-list_body-limit-danger' : 'files-list_body-limit'}>
-                  Limit: {formatBytes([...files.map((el) => el.size)].reduce((el, acc: number) => acc += el))} / {formatBytes(maximumBytes)} MB
+                  Limit: {formatBytes([...files.map((el) => el.size)].reduce((el, acc: number) => acc += el))} / {formatBytes(maximumBytes)}
                 </div>
-                <Link to={`/download/${ID}`} className='files-list_body-btn' onClick={uploadToServer}>Upload</Link>
+                <button 
+                  onClick={e => uploadToServer(e)} 
+                  className='files-list_body-btn' 
+                  style={{pointerEvents: [...files.map((el) => el.size)].reduce((el, acc: number) => acc += el) < maximumBytes && isClicked ? 'auto' : 'none'}}
+                >Upload, 1 min.</button>
               </div>
             </>
         }
+        {
+                !isClicked
+                  ?
+                  <div className='after-upload'>You can dowload this files of <Link to={`/download/${ID}`}>link</Link>.</div>
+                  :
+                  <></>
+        }
       </div> 
-    </div>     
+    </div>  
+    </>   
   )
 }
 

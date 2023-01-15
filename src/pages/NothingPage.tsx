@@ -1,9 +1,13 @@
 import React from 'react'
 import '../styles/NothingPage/nothingPage.scss'
 
-const NothingPage = () => {
+interface NothingPageProps {
+  content?: string;
+}
+
+const NothingPage: React.FC<NothingPageProps> = ({content}) => {
   return (
-    <div className='nothing_page'>This page does noe exist!</div>
+    <div className='nothing_page'>{content ? `This page does not exist, ${content}` : 'This page does not exist'}</div>
   )
 }
 

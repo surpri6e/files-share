@@ -59,6 +59,8 @@
     border: 1px solid $black;
     border-radius: 2px;
     transition: padding 100ms linear;
+    background-color: transparent;
+    cursor: pointer;
 
     &:hover {
         padding: 5px 20px;
@@ -67,4 +69,8 @@
 
 .files-list_body-limit-danger {
     color: $danger;
+}
+
+.after-upload {
+    text-align: end;
 }

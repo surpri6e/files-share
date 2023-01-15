@@ -1,0 +1,13 @@
+.download {
+    padding-top: 30px;
+
+    & > *:not(:last-child) {
+        margin-bottom: 7px;
+    }
+
+    & > span {
+        font-size: 1rem;
+        text-decoration: underline;
+    }
+}
+

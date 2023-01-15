@@ -25,6 +25,7 @@
     display: flex;
     width: 30%;
     justify-content: flex-end;
+    align-items: center;
 
     & > *:not(:last-child) {
         margin-right: 10px;
@@ -45,4 +46,15 @@
     padding: 0px 3px;
     border-radius: 2px;
     cursor: pointer;
+}
+
+.cardfileDownload {
+    display: block;
+    font-size: 0.8rem;
+    border: 1px solid orange;
+    padding: 0px 3px;
+    border-radius: 2px;
+    cursor: pointer;
+    text-decoration: none;
+    color: inherit;
 }
