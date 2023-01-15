@@ -47,7 +47,7 @@ const MainPage = () => {
       const storageRef = ref(storage, `${ID}/${el.name}`);
       uploadBytes(storageRef, el).then(() => setIsClicked(false)).catch(() => console.log('error!'));
     })
-    await fetch('https://surfiles.vercel.app/', {
+    await fetch('https://mixed-ahead-inch.glitch.me/', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
