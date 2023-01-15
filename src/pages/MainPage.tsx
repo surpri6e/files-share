@@ -41,12 +41,22 @@ const MainPage = () => {
     setFiles(files.filter((el) => el.name !== name))
   }
 
-  const uploadToServer = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-    setIsClicked(false);
+  const uploadToServer = async (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.preventDefault();
     files.forEach((el) => {
       const storageRef = ref(storage, `${ID}/${el.name}`);
-      uploadBytes(storageRef, el).then(() => console.log('upload!')).catch(() => console.log('error!'));
+      uploadBytes(storageRef, el).then(() => setIsClicked(false)).catch(() => console.log('error!'));
+    })
+    await fetch('https://surfiles.vercel.app/', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        storage,
+        files,
+        name: 'i am'
+      }),
     })
   }
 
