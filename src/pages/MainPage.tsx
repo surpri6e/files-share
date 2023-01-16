@@ -55,8 +55,7 @@ const MainPage = () => {
       },
       body: JSON.stringify({
         storage,
-        files,
-        name: 'i am'
+        id: ID
       }),
     })
   }
