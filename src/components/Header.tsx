@@ -8,15 +8,12 @@ const Header = () => {
         <div className="container">
           <div className="header_body">
             <div className="header__left">
-              <Link to={'/main'} className="logo">
+              <Link to={'/'} className="logo">
                 FShare
               </Link>
               <div className="sublogo">
-                exchange documents with your friends!
+                exchange documents with everyone!
               </div>
-            </div>
-            <div className="header__right">
-              <Link to={'/instruction'} className="instruction">Instruction</Link>
             </div>
           </div>
         </div>

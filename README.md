@@ -1,2 +1,9 @@
 # Files share
-- [**DESIGN**](https://www.figma.com/file/9VrNLAmc5LXDWUcLvQoINz/Untitled?node-id=0%3A1&t=rnw0vRSOJlwVtJ1n-0)
+
+Exchange files with everyone!
+
+
+**Current version -> files live while file will not be downloaded. After that, files automaticly will be deleted.**
+Last version -> files lives only 3 minutes.
+
+## Link on server last version's: [here](https://github.com/surpri6e/files-share-server)

@@ -19,13 +19,6 @@
     align-items: center;
 }
 
-.header__right {
-    width: 30%;
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-}
-
 .logo {
     color: $black;
     text-decoration: none;
@@ -41,15 +34,4 @@
     color: lighten($black, 30%);
     text-decoration: underline;
     letter-spacing: 1px;
-}
-
-.instruction {
-    font-size: 1.1rem;
-    color: $black;
-    transition: transform 50ms linear;
-    text-decoration: none;
-
-    &:hover {
-        transform: scale(1.01);
-    }
 }

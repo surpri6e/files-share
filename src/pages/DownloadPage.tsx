@@ -1,4 +1,4 @@
-import { getDownloadURL, listAll, ref } from 'firebase/storage'
+import { getDownloadURL, listAll, ref, deleteObject } from 'firebase/storage'
 import React from 'react'
 import { FirebaseContext } from '../context/FirebaseContext'
 import { useParams } from 'react-router-dom';
@@ -11,8 +11,6 @@ const DownloadPage = () => {
   const {storage} = React.useContext(FirebaseContext);
   const [files, setFiles] = React.useState([] as Blob[]);
   const [names, setNames] = React.useState<string[]>([]);
-  const [isMobile] = React.useState<boolean>((/Android|webOS|iPhone|iPad|iPod|BlackBerry|BB|PlayBook|IEMobile|Windows Phone|Kindle|Silk|Opera Mini/i
-  .test(navigator.userAgent)))
 
   React.useEffect(() => {
     listAll(ref(storage, `${id!}/`))
@@ -46,19 +44,15 @@ const DownloadPage = () => {
   return (
     <>
       {
-        isMobile
-        ?
-          <NothingPage content='on mobile this application does not work!'/>
-        :
         files.length === 0
           ?
-          <NothingPage content='or files is loading!'/>
+          <NothingPage content='or files is uploading! (maximum 1 min.)'/>
           :
           <div className="download">
             <span>You can dowload it:</span>
             {
               files.map((el, ind) =>
-                <CardFile href={`${el ? URL.createObjectURL(el) : ''}`} key={el.size} name={names[ind]} size={el.size} type={el.type}/>
+                <CardFile href={URL.createObjectURL(el)} key={ind} name={names[ind]} size={el.size} type={el.type}/>
               )
             }
           </div>

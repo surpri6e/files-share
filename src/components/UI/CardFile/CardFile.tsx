@@ -24,7 +24,7 @@ const CardFile: FC<CardFileProps> = ({name, deleteFile, size, type, href}) => {
                 ?
                   <div className={cl.cardfileDelete} onClick={() => deleteFile(name)}>x</div>
                 :
-                  <a className={cl.cardfileDownload} href={href} download={name.split('.')[1] === 'png' ? name : ''}>{'>'}</a>
+                  <a className={cl.cardfileDownload} href={href} download={name}>{'>'}</a>
             }
             
         </div>
