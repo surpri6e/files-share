@@ -1,4 +1,4 @@
-import { getDownloadURL, listAll, ref, deleteObject } from 'firebase/storage'
+import { getDownloadURL, listAll, ref } from 'firebase/storage'
 import React from 'react'
 import { FirebaseContext } from '../context/FirebaseContext'
 import { useParams } from 'react-router-dom';
