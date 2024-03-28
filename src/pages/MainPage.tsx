@@ -72,7 +72,7 @@ const MainPage = () => {
                      ))}
 
                      <div className='files-list_body-upload'>
-                        <div className={filesSize.amount > maximumBytes.amount ? 'files-list_body-limit-danger' : 'files-list_body-limit'}>
+                        <div className={Number(filesSize.amount.toFixed(2)) > maximumBytes.amount ? 'files-list_body-limit-danger' : 'files-list_body-limit'}>
                            Limit: {filesSize.amount.toFixed(2)} {filesSize.prefix} / {maximumBytes.amount} {maximumBytes.prefix}
                         </div>
 

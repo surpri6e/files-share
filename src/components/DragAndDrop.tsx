@@ -23,7 +23,7 @@ const DragAndDrop: React.FC<IDragAndDrop> = ({ drag, setDrag, setFiles, files })
       e.preventDefault();
 
       // If name alredy exist in files
-      const condition: boolean = [...files.map((el) => el.name)].includes(e.dataTransfer.files[0].name);
+      const condition: boolean = files.map((el) => el.name).includes(e.dataTransfer.files[0].name);
 
       if (!condition) {
          setFiles((prev) => [...prev, ...e.dataTransfer.files]);

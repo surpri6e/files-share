@@ -1,4 +1,3 @@
-import React from 'react';
 import { publicRoutes } from '../routes';
 import { Route, Routes } from 'react-router-dom';
 import NothingPage from '../pages/NothingPage';
