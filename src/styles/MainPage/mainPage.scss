@@ -1,76 +1,76 @@
 @import '../vars.scss';
 
 .mainpage {
-    height: 100%;
+   height: 100%;
 }
 
 .arrow_body {
-    display: flex;
-    justify-content: center;
-    padding-top: 30px;
-    margin-bottom: 60px;
+   display: flex;
+   justify-content: center;
+   padding-top: 30px;
+   margin-bottom: 60px;
 }
 
 .drag_body {
-    padding: 50px 0;
-    text-align: center;
-    color: $darkengray;
-    letter-spacing: 25px;
-    font-size: 3rem;
-    text-transform: uppercase;
+   padding: 50px 0;
+   text-align: center;
+   color: $darkengray;
+   letter-spacing: 25px;
+   font-size: 3rem;
+   text-transform: uppercase;
 }
 
 .uploaded_body {
-    font-size: 1.2rem;
-    text-align: center;
-    padding-top: 30px;
+   font-size: 1.2rem;
+   text-align: center;
+   padding-top: 30px;
 }
 
 .files-list_body {
-    & > span {
-        font-size: 1rem;
-        text-decoration: underline;
-    }
-    
-    & > * {
-        margin-bottom: 8px;
-    }
+   & > span {
+      font-size: 1rem;
+      text-decoration: underline;
+   }
+
+   & > * {
+      margin-bottom: 8px;
+   }
 }
 
 .files-list_body-nothing {
-    color: $danger;
+   color: $danger;
 }
 
 .files-list_body-upload {
-    display: flex;
-    width: 100%;
-    justify-content: flex-end;
-    align-items: center;
+   display: flex;
+   width: 100%;
+   justify-content: flex-end;
+   align-items: center;
 
-    & > *:not(:first-child) {
-        margin-left: 15px;
-    }
+   & > *:not(:first-child) {
+      margin-left: 15px;
+   }
 }
 
 .files-list_body-btn {
-    text-decoration: none;
-    color: inherit;
-    padding: 5px;
-    border: 1px solid $black;
-    border-radius: 2px;
-    transition: padding 100ms linear;
-    background-color: transparent;
-    cursor: pointer;
+   text-decoration: none;
+   color: inherit;
+   padding: 5px;
+   border: 1px solid $black;
+   border-radius: 2px;
+   transition: padding 100ms linear;
+   background-color: transparent;
+   cursor: pointer;
 
-    &:hover {
-        padding: 5px 20px;
-    }
+   &:hover {
+      padding: 5px 20px;
+   }
 }
 
 .files-list_body-limit-danger {
-    color: $danger;
+   color: $danger;
 }
 
 .after-upload {
-    text-align: end;
+   text-align: end;
 }

@@ -1,5 +1,5 @@
-import { FirebaseStorage } from 'firebase/storage'
+import { FirebaseStorage } from 'firebase/storage';
 
 export interface IStorage {
-    storage: FirebaseStorage;
+   storage: FirebaseStorage;
 }

@@ -1,7 +1,6 @@
 # Files share
 
-Exchange files with everyone!
-
+Application did on create-react-app scripts. Exchange files with everyone!
 
 **Current version -> 1st day of every month in 00:00 all files in database delete.**
 

@@ -1,60 +1,60 @@
 @import '../../../styles/vars.scss';
 
 .cardfile {
-    display: flex;
-    width: 100%;
-    height: auto;
-    background-color: $grey;
-    border-radius: 2px;
-    border: 1px solid $black;
-    padding: 0 15px;
-    align-items: center;
+   display: flex;
+   width: 100%;
+   height: auto;
+   background-color: $grey;
+   border-radius: 2px;
+   border: 1px solid $black;
+   padding: 0 15px;
+   align-items: center;
 }
 
 .cardfileLeft {
-    display: flex;
-    width: 70%;
-    align-items: center;
+   display: flex;
+   width: 70%;
+   align-items: center;
 
-    & > *:not(:last-child) {
-        margin-right: 15px;
-    }
+   & > *:not(:last-child) {
+      margin-right: 15px;
+   }
 }
 
 .cardfileRight {
-    display: flex;
-    width: 30%;
-    justify-content: flex-end;
-    align-items: center;
+   display: flex;
+   width: 30%;
+   justify-content: flex-end;
+   align-items: center;
 
-    & > *:not(:last-child) {
-        margin-right: 10px;
-    }
+   & > *:not(:last-child) {
+      margin-right: 10px;
+   }
 }
 
 .cardfileName {
-    font-weight: 600;
+   font-weight: 600;
 }
 
 .cardfileType {
-    font-size: 0.8rem;
+   font-size: 0.8rem;
 }
 
 .cardfileDelete {
-    font-size: 0.8rem;
-    border: 1px solid $danger;
-    padding: 0px 3px;
-    border-radius: 2px;
-    cursor: pointer;
+   font-size: 0.8rem;
+   border: 1px solid $danger;
+   padding: 0px 3px;
+   border-radius: 2px;
+   cursor: pointer;
 }
 
 .cardfileDownload {
-    display: block;
-    font-size: 0.8rem;
-    border: 1px solid orange;
-    padding: 0px 3px;
-    border-radius: 2px;
-    cursor: pointer;
-    text-decoration: none;
-    color: inherit;
+   display: block;
+   font-size: 0.8rem;
+   border: 1px solid orange;
+   padding: 0px 3px;
+   border-radius: 2px;
+   cursor: pointer;
+   text-decoration: none;
+   color: inherit;
 }
