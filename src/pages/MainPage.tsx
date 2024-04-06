@@ -1,102 +1,96 @@
-import { ref, uploadBytes } from 'firebase/storage';
-import React from 'react';
+import React, { useContext, useState } from 'react';
 import { Link } from 'react-router-dom';
 import Arrow from '../components/UI/Arrow/Arrow';
 import CardFile from '../components/UI/CardFile/CardFile';
-import { FirebaseContext } from '../context/FirebaseContext';
 import '../styles/MainPage/mainPage.scss';
 import { maximumBytes } from '../utils/consts';
 import DragAndDrop from '../components/DragAndDrop';
-import { throwError } from '../utils/throwError';
-import { IFormatBytesReturned, formatBytes } from 'bytes-transform';
+import { IFormattedBytes, formatBytes } from 'bytes-transform';
+import { getRandomKey } from 'rkey';
+import { useIsMobileDevice } from '../hooks/useIsMobileDevice';
+import { FilesContext } from '../context/FilesContext';
+import { uploadToServer } from '../api/FilesApi';
 
 const MainPage = () => {
-   const { storage } = React.useContext(FirebaseContext);
-   const [drag, setDrag] = React.useState(false);
+   const { files } = useContext(FilesContext);
+   const [drag, setDrag] = useState(false);
 
-   const [files, setFiles] = React.useState<File[]>([]);
+   const [isClicked, setIsClicked] = useState(true);
 
-   const [isClicked, setIsClicked] = React.useState(true);
+   const [id] = useState(() => getRandomKey(20, 'all'));
 
-   const [ID] = React.useState(() => String(Date.now()));
+   const [filesSize, setFilesSize] = useState<IFormattedBytes>({ amount: 0, prefix: 'MB' });
 
-   const [filesSize, setFilesSize] = React.useState<IFormatBytesReturned>({ amount: 0, prefix: 'MB' });
+   const isMobileDevice = useIsMobileDevice();
 
    React.useEffect(() => {
-      if (files.map((el) => el.size).length > 0) {
+      if (files.map((file) => file.size).length > 0) {
          setFilesSize(
             formatBytes(
-               files.map((el) => el.size).reduce((el, acc: number) => (acc += el)),
+               files.map((file) => file.size).reduce((file, acc: number) => (acc += file)),
                { from: 'B', to: 'MB' },
             ),
          );
       }
    }, [files]);
 
-   const deleteFile = (name: string) => {
-      setFiles(files.filter((el) => el.name !== name));
-   };
-
-   const uploadToServer = async (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-      e.preventDefault();
-
-      files.forEach((el) => {
-         const storageRef = ref(storage, `${ID}/${el.name}`);
-         uploadBytes(storageRef, el)
-            .then(() => setIsClicked(false))
-            .catch((err) => {
-               throwError(err);
-            });
-      });
-   };
-
    return (
       <>
          <div className='mainpage'>
-            <div className={`arrow_body`}>
-               <Arrow />
-            </div>
+            {isMobileDevice && <div>asdasasd</div>}
 
-            <DragAndDrop drag={drag} files={files} setDrag={setDrag} setFiles={setFiles} />
-
-            <div className='files-list_body'>
-               <span>Uploaded files:</span>
-
-               {files.length === 0 ? (
-                  <div className='files-list_body-nothing'>You did not upload any files.</div>
-               ) : (
-                  <>
-                     {/* If array of files is not empty */}
-                     {files.map((el, ind) => (
-                        <CardFile key={ind} name={el.name} size={el.size} type={el.type} deleteFile={deleteFile} />
-                     ))}
-
-                     <div className='files-list_body-upload'>
-                        <div className={Number(filesSize.amount.toFixed(2)) > maximumBytes.amount ? 'files-list_body-limit-danger' : 'files-list_body-limit'}>
-                           Limit: {filesSize.amount.toFixed(2)} {filesSize.prefix} / {maximumBytes.amount} {maximumBytes.prefix}
-                        </div>
-
-                        <button
-                           onClick={(e) => uploadToServer(e)}
-                           className='files-list_body-btn'
-                           style={{
-                              pointerEvents: Number(filesSize.amount.toFixed(2)) < maximumBytes.amount && isClicked ? 'auto' : 'none',
-                           }}
-                        >
-                           Upload
-                        </button>
-                     </div>
-                  </>
-               )}
-
-               {!isClicked ? (
-                  <div className='after-upload'>
-                     You can dowload this files of <Link to={`/download/${ID}`}>link</Link>.
+            {!isMobileDevice && (
+               <>
+                  <div className='arrow_body'>
+                     <Arrow />
                   </div>
-               ) : (
-                  <></>
-               )}
-            </div>
+
+                  <DragAndDrop drag={drag} setDrag={setDrag} />
+
+                  <div className='files-list_body'>
+                     <span>Uploaded files:</span>
+
+                     {files.length === 0 ? (
+                        <div className='files-list_body-nothing'>You did not upload any files.</div>
+                     ) : (
+                        <>
+                           {/* If array of files is not empty */}
+                           {files.map((file, ind) => (
+                              <CardFile key={ind} name={file.name} size={file.size} type={file.type} />
+                           ))}
+
+                           <div className='files-list_body-upload'>
+                              <div
+                                 className={
+                                    Number(filesSize.amount.toFixed(2)) > maximumBytes.amount ? 'files-list_body-limit-danger' : 'files-list_body-limit'
+                                 }
+                              >
+                                 Limit: {filesSize.amount.toFixed(2)} {filesSize.prefix} / {maximumBytes.amount} {maximumBytes.prefix}
+                              </div>
+
+                              <button
+                                 onClick={(e) => uploadToServer(e, files, setIsClicked, id)}
+                                 className='files-list_body-btn'
+                                 style={{
+                                    pointerEvents: Number(filesSize.amount.toFixed(2)) < maximumBytes.amount && isClicked ? 'auto' : 'none',
+                                 }}
+                              >
+                                 Upload
+                              </button>
+                           </div>
+                        </>
+                     )}
+
+                     {!isClicked ? (
+                        <div className='after-upload'>
+                           You can dowload this files of <Link to={`/download/${id}`}>link</Link>.
+                        </div>
+                     ) : (
+                        <></>
+                     )}
+                  </div>
+               </>
+            )}
          </div>
       </>
    );

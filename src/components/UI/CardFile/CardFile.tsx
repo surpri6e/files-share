@@ -1,17 +1,19 @@
-import { FC, useState } from 'react';
+import { FC, useContext, useState } from 'react';
 import cl from './CardFile.module.scss';
 import { formatBytes } from 'bytes-transform';
+import { deleteFile } from '../../../api/FilesApi';
+import { FilesContext } from '../../../context/FilesContext';
 
 interface ICardFile {
    name: string;
    size: number;
    type: string;
-   deleteFile?: (name: string) => void;
    href?: string;
 }
 
-const CardFile: FC<ICardFile> = ({ name, deleteFile, size, type, href }) => {
-   const [newFormat] = useState(formatBytes(size, { from: 'B', to: 'MB' }));
+const CardFile: FC<ICardFile> = ({ name, size, type, href }) => {
+   const { files, setFiles } = useContext(FilesContext);
+   const [newFormat] = useState(formatBytes(size, { from: 'B', to: 'MB', fixTo: 2 }));
 
    return (
       <div className={cl.cardfile}>
@@ -24,10 +26,10 @@ const CardFile: FC<ICardFile> = ({ name, deleteFile, size, type, href }) => {
          <div className={cl.cardfileRight}>
             <div className={cl.cardfileSize}>
                {/* Library bytes-transform */}
-               {newFormat.amount.toFixed(2)} {newFormat.prefix}
+               {newFormat.amount} {newFormat.prefix}
             </div>
             {deleteFile ? (
-               <div className={cl.cardfileDelete} onClick={() => deleteFile(name)}>
+               <div className={cl.cardfileDelete} onClick={() => deleteFile(name, files, setFiles)}>
                   x
                </div>
             ) : (

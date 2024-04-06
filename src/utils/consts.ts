@@ -1,3 +1,3 @@
-import { IFormatBytesReturned } from 'bytes-transform';
+import { IFormattedBytes } from 'bytes-transform';
 
-export const maximumBytes: IFormatBytesReturned = { amount: 10, prefix: 'MB' };
+export const maximumBytes: IFormattedBytes = { amount: 10, prefix: 'MB' };

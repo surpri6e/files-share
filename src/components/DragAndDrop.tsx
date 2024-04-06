@@ -1,13 +1,14 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { FilesContext } from '../context/FilesContext';
 
 interface IDragAndDrop {
    drag: boolean;
    setDrag: React.Dispatch<React.SetStateAction<boolean>>;
-   setFiles: React.Dispatch<React.SetStateAction<File[]>>;
-   files: File[];
 }
 
-const DragAndDrop: React.FC<IDragAndDrop> = ({ drag, setDrag, setFiles, files }) => {
+const DragAndDrop: React.FC<IDragAndDrop> = ({ drag, setDrag }) => {
+   const { files, setFiles } = useContext(FilesContext);
+
    const dragStart = (e: React.DragEvent<HTMLDivElement>) => {
       e.preventDefault();
       setDrag(true);
