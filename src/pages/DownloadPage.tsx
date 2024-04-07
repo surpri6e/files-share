@@ -12,27 +12,12 @@ const DownloadPage = () => {
 
    const [files, names, loading] = useGetFiles(id);
 
-   // return isMobileDevice ? (
-   //    <NothingPage content='Only desktop device!' />
-   // ) : (
-   //    <>
-   //       {loading && <NothingPage content='Files is uploading!' />}
-   //       {files.length === 0 && !loading && <NothingPage />}
-   //       {files.length !== 0 && !loading && (
-   //          <div className='download'>
-   //             <span>You can dowload it:</span>
-   //             {files.map((file, ind) => (
-   //                <CardFile href={URL.createObjectURL(file)} key={ind} name={names[ind]} size={file.size} type={file.type} />
-   //             ))}
-   //          </div>
-   //       )}
-   //    </>
-   // );
-
-   return (
+   return isMobileDevice ? (
+      <NothingPage content='Only desktop device!' />
+   ) : (
       <>
          {loading && <NothingPage content='Files is uploading!' />}
-         {files.length === 0 && !loading && <NothingPage content='Files not found.' />}
+         {files.length === 0 && !loading && <NothingPage />}
          {files.length !== 0 && !loading && (
             <div className='download'>
                <span>You can dowload it:</span>
