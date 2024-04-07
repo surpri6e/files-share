@@ -1,56 +1,43 @@
-import { getDownloadURL, listAll, ref } from 'firebase/storage';
-import React from 'react';
-import { FirebaseContext } from '../context/FirebaseContext';
 import { useParams } from 'react-router-dom';
 import NothingPage from './NothingPage';
 import CardFile from '../components/UI/CardFile/CardFile';
 import '../styles/DownloadPage/downloadPage.scss';
-import { throwError } from '../utils/throwError';
+import { useGetFiles } from '../hooks/useGetFiles';
+import { useIsMobileDevice } from '../hooks/useIsMobileDevice';
 
 const DownloadPage = () => {
    const { id } = useParams();
-   const { storage } = React.useContext(FirebaseContext);
-   const [files, setFiles] = React.useState<Blob[]>([]);
-   const [names, setNames] = React.useState<string[]>([]);
 
-   React.useEffect(() => {
-      // Get files from database
-      listAll(ref(storage, `${id!}/`))
-         .then((res: any) => {
-            res.items.forEach((itemRef: any) => {
-               getDownloadURL(ref(storage, `${itemRef._location.path_}`))
-                  .then((url) => {
-                     const xhr = new XMLHttpRequest();
-                     xhr.responseType = 'blob';
+   const isMobileDevice = useIsMobileDevice();
 
-                     xhr.onload = () => {
-                        const blob = xhr.response;
-                        setFiles((prev) => [...prev, blob]);
-                        setNames((prev) => [...prev, `${itemRef._location.path_.split('/')[1]}`]);
-                     };
+   const [files, names, loading] = useGetFiles(id);
 
-                     xhr.open('GET', url);
-                     xhr.send();
-                  })
-                  .catch((err) => {
-                     throwError(err);
-                  });
-            });
-         })
-         .catch((err) => {
-            throwError(err);
-         });
-   }, [id, storage]);
+   // return isMobileDevice ? (
+   //    <NothingPage content='Only desktop device!' />
+   // ) : (
+   //    <>
+   //       {loading && <NothingPage content='Files is uploading!' />}
+   //       {files.length === 0 && !loading && <NothingPage />}
+   //       {files.length !== 0 && !loading && (
+   //          <div className='download'>
+   //             <span>You can dowload it:</span>
+   //             {files.map((file, ind) => (
+   //                <CardFile href={URL.createObjectURL(file)} key={ind} name={names[ind]} size={file.size} type={file.type} />
+   //             ))}
+   //          </div>
+   //       )}
+   //    </>
+   // );
 
    return (
       <>
-         {files.length === 0 ? (
-            <NothingPage content='or files is uploading! (maximum 1 min.)' />
-         ) : (
+         {loading && <NothingPage content='Files is uploading!' />}
+         {files.length === 0 && !loading && <NothingPage content='Files not found.' />}
+         {files.length !== 0 && !loading && (
             <div className='download'>
                <span>You can dowload it:</span>
-               {files.map((el, ind) => (
-                  <CardFile href={URL.createObjectURL(el)} key={ind} name={names[ind]} size={el.size} type={el.type} />
+               {files.map((file, ind) => (
+                  <CardFile href={URL.createObjectURL(file)} key={ind} name={names[ind]} size={file.size} type={file.type} />
                ))}
             </div>
          )}

@@ -1,7 +1,6 @@
 import { FC, useContext, useState } from 'react';
 import cl from './CardFile.module.scss';
 import { formatBytes } from 'bytes-transform';
-import { deleteFile } from '../../../api/FilesApi';
 import { FilesContext } from '../../../context/FilesContext';
 
 interface ICardFile {
@@ -9,9 +8,10 @@ interface ICardFile {
    size: number;
    type: string;
    href?: string;
+   deleteFile?: (name: string, files: File[], setFiles: React.Dispatch<React.SetStateAction<File[]>>) => void;
 }
 
-const CardFile: FC<ICardFile> = ({ name, size, type, href }) => {
+const CardFile: FC<ICardFile> = ({ name, size, type, href, deleteFile }) => {
    const { files, setFiles } = useContext(FilesContext);
    const [newFormat] = useState(formatBytes(size, { from: 'B', to: 'MB', fixTo: 2 }));
 

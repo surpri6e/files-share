@@ -9,10 +9,11 @@ import { IFormattedBytes, formatBytes } from 'bytes-transform';
 import { getRandomKey } from 'rkey';
 import { useIsMobileDevice } from '../hooks/useIsMobileDevice';
 import { FilesContext } from '../context/FilesContext';
-import { uploadToServer } from '../api/FilesApi';
+import { deleteFile, uploadToServer } from '../api/FilesApi';
+import NothingPage from './NothingPage';
 
 const MainPage = () => {
-   const { files } = useContext(FilesContext);
+   const { files, setFiles } = useContext(FilesContext);
    const [drag, setDrag] = useState(false);
 
    const [isClicked, setIsClicked] = useState(true);
@@ -37,7 +38,7 @@ const MainPage = () => {
    return (
       <>
          <div className='mainpage'>
-            {isMobileDevice && <div>asdasasd</div>}
+            {isMobileDevice && <NothingPage content='Only desktop device!' />}
 
             {!isMobileDevice && (
                <>
@@ -56,7 +57,7 @@ const MainPage = () => {
                         <>
                            {/* If array of files is not empty */}
                            {files.map((file, ind) => (
-                              <CardFile key={ind} name={file.name} size={file.size} type={file.type} />
+                              <CardFile key={ind} name={file.name} size={file.size} type={file.type} deleteFile={deleteFile} />
                            ))}
 
                            <div className='files-list_body-upload'>
@@ -81,12 +82,14 @@ const MainPage = () => {
                         </>
                      )}
 
-                     {!isClicked ? (
+                     {!isClicked && (
                         <div className='after-upload'>
-                           You can dowload this files of <Link to={`/download/${id}`}>link</Link>.
+                           You can dowload this files of{' '}
+                           <Link to={`/download/${id}`} onClick={() => setFiles([])}>
+                              link
+                           </Link>
+                           .
                         </div>
-                     ) : (
-                        <></>
                      )}
                   </div>
                </>

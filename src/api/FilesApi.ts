@@ -1,5 +1,4 @@
 import { ref, uploadBytes } from 'firebase/storage';
-import { throwError } from '../utils/throwError';
 import { storage } from '..';
 
 export const deleteFile = (name: string, files: File[], setFiles: React.Dispatch<React.SetStateAction<File[]>>) => {
@@ -14,11 +13,9 @@ export const uploadToServer = async (
 ) => {
    e.preventDefault();
 
-   files.forEach((file) => {
-      uploadBytes(ref(storage, `${id}/${file.name}`), file)
-         .then(() => setIsClicked(false))
-         .catch((err: unknown) => {
-            throwError(err);
-         });
+   files.forEach(async (file) => {
+      await uploadBytes(ref(storage, `${id}/${file.name}`), file);
    });
+
+   setIsClicked(false);
 };

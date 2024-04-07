@@ -6,7 +6,7 @@ interface INothingPageProps {
 }
 
 const NothingPage: React.FC<INothingPageProps> = ({ content }) => {
-   return <div className='nothing_page'>{content ? `This page does not exist, ${content}` : 'This page does not exist.'}</div>;
+   return <div className='nothing_page'>{content ? content : 'This page does not exist.'}</div>;
 };
 
 export default NothingPage;
