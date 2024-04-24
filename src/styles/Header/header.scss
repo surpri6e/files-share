@@ -35,3 +35,9 @@
    text-decoration: underline;
    letter-spacing: 1px;
 }
+
+@media screen and (max-width: 380px) {
+   .header__left {
+      width: 100%;
+   }
+}
